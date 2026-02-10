@@ -64,6 +64,14 @@
             <version>4.0.0</version>
         </dependency>
 
+        <!-- Redis (includes Redis and Jedis) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>4.1.0-M1</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Spring Dev tools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
