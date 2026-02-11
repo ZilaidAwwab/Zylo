@@ -13,19 +13,21 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "users")
-public class UserEntity extends BaseEntity {
-    @Column(nullable = false, length = 50, unique = true)
+public class User extends BaseEntity {
+    @Column(nullable = false, length = 100)
     private String name;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 60)
     private String password; // hash
 
     @Column(nullable = false, name = "is_active")
-    private Boolean isActive = true;
+    @Builder.Default()
+    private boolean isActive = true;
 
     @Column(nullable = false, name = "is_email_verified")
-    private Boolean isEmailVerified = false;
+    @Builder.Default()
+    private boolean isEmailVerified = false;
 }
