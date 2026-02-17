@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user", indexes = {
         @Index(name = "idx_email", columnList = "email"),
-        @Index(name = "idx_cognito_sub", columnList = "cognito_sub"),
-        @Index(name = "idx_phone", columnList = "phone_no"),
+        // @Index(name = "idx_cognito_sub", columnList = "cognito_sub"),
+        // @Index(name = "idx_phone", columnList = "phone_no"),
         @Index(name = "idx_role", columnList = "role")
 })
 @Getter
@@ -25,8 +25,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cognito_sub", unique = true, nullable = false)
-    private String cognitoSub;
+    // @Column(name = "cognito_sub", unique = true, nullable = false)
+    // private String cognitoSub;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -37,7 +37,7 @@ public class User {
     @Column(name = "phone_no", length = 20)
     private String phoneNo;
 
-    @Column(name = "password_hash")
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
     @Column(name = "is_email_verified")
