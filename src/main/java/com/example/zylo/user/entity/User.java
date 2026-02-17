@@ -3,7 +3,6 @@ package com.example.zylo.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SoftDelete;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +19,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @SQLDelete(sql = "UPDATE user SET is_deleted = true, deleted_at = NOW() WHERE id = ?")
-@SoftDelete(columnName = "is_deleted")
 public class User {
 
     @Id
