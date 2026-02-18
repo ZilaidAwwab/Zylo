@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,7 +20,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @SQLDelete(sql = "UPDATE user SET is_deleted = true, deleted_at = NOW() WHERE id = ?")
-public class User {
+// Since we are using redis for data coming from this class, so we need to implement Serializable
+public class User implements Serializable {
+
+    private static final long serialVersionUId = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
