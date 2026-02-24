@@ -39,7 +39,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // Public endpoints (Fully)
-                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
@@ -47,6 +46,17 @@ public class SecurityConfig {
                         // Public Read Access
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+
+                        // Auth Endpoints
+                        // Public
+                        .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/refresh").permitAll()
+
+                        // Protected
+                        .requestMatchers("/auth/me").authenticated()
+                        .requestMatchers("/auth/logout").authenticated()
+                        .requestMatchers("/auth/admin/**").authenticated()
 
                         // Admin only
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
