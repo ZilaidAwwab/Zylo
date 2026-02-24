@@ -63,7 +63,7 @@ public class JwtService {
         // Storing refresh token in redis
         // Key: "refresh_token:{userId}"
         // This lets us invalidate specific user's token on logout
-        String redisKey = "refresh_token: " + user.getId();
+        String redisKey = "refresh_token:" + user.getId();
         redisTemplate.opsForValue().set(
                 redisKey,
                 refreshToken,
@@ -158,7 +158,7 @@ public class JwtService {
         long ttl = expiry.getTime() - System.currentTimeMillis();
         if (ttl > 0) {
             // Stores in redis until naturally expires
-            String blacklistKey = "blacklist: " + token;
+            String blacklistKey = "blacklist:" + token;
             redisTemplate.opsForValue().set(
                     blacklistKey,
                     email,
@@ -170,19 +170,19 @@ public class JwtService {
     }
 
     public boolean isTokenBlacklisted(String token) {
-        String blacklistKey = "blacklist: " + token;
+        String blacklistKey = "blacklist:" + token;
         return Boolean.TRUE.equals(redisTemplate.hasKey(blacklistKey));
     }
 
     // Invalidate refresh token (Logout)
     public void invalidateRefreshToken(Long userId) {
-        String redisKey = "refresh_token: " + userId;
+        String redisKey = "refresh_token:" + userId;
         redisTemplate.delete(redisKey);
         log.info("Refresh token invalidated for userId: {}", userId);
     }
 
     public boolean isRefreshTokenValid(String token, Long userId) {
-        String redisKey = "refresh_token: " + userId;
+        String redisKey = "refresh_token:" + userId;
         String storedToken = redisTemplate.opsForValue().get(redisKey);
         return token.equals(storedToken) && isTokenExpired(token);
     }
