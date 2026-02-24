@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,5 +97,26 @@ public class Product {
 
     public enum StockStatus {
         IN_STOCK, OUT_OF_STOCK, LOW_STOCK
+    }
+
+    // Helper Methods
+    public void decrementStock(int quantity) {
+        if (stockQuantity >= quantity) {
+            stockQuantity -= quantity;
+        } else {
+            throw new IllegalStateException("Insufficient Stock");
+        }
+    }
+
+    public void incrementStock(int quantity) {
+        stockQuantity += quantity;
+    }
+
+    public boolean inStock() {
+        return stockQuantity > 0;
+    }
+
+    public boolean isLowStock() {
+        return stockQuantity > 0 && stockQuantity <= lowStockThreshold;
     }
 }
