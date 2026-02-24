@@ -112,4 +112,12 @@ public class GlobalExceptionHandler {
                 ApiResponse.error("Something went wrong. Please try again")
         );
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleResourceNotFound(
+            ResourceNotFoundException ex
+    ) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
 }
